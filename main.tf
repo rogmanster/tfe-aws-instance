@@ -31,7 +31,7 @@ data "terraform_remote_state" "aws_security_group" {
   config = {
    organization = "rogercorp"
    workspaces = {
-     name = "aws-security-group"
+     name = "aws-security-group-prod"
    }
   }
 }
