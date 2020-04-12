@@ -41,7 +41,7 @@ resource "aws_instance" "ubuntu" {
   instance_type           = var.instance_type
   key_name                = aws_key_pair.awskey.key_name
   vpc_security_group_ids  = [data.terraform_remote_state.aws_security_group.outputs.security_group_id]
-  #vpc_security_group_ids  = [ "sg-0c712552bf4e7da3c"]
+  subnet_id               = data.terraform_remote_state.rogercorp_aws_vpc_prod.outputs.private_subnets[0]
 
   tags = {
     Name        = var.name
