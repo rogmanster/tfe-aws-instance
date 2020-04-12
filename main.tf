@@ -41,7 +41,7 @@ resource "aws_instance" "ubuntu" {
   ami               = data.aws_ami.rhel_ami.id
   instance_type     = var.instance_type
   key_name          = aws_key_pair.awskey.key_name
-  security_groups   = data.terraform_remote_state.aws_security_group.security_group_id
+  security_groups   = data.terraform_remote_state.tfe_aws_security_group.security_group_id
 
   tags = {
     Name        = var.name
