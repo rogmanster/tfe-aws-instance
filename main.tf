@@ -47,9 +47,6 @@ resource "aws_key_pair" "awskey" {
   public_key = tls_private_key.awskey.public_key_openssh
 }
 
-
-
-
 resource "aws_instance" "ubuntu" {
   ami                     = data.aws_ami.rhel_ami.id
   instance_type           = var.instance_type
