@@ -40,7 +40,8 @@ resource "aws_instance" "ubuntu" {
   ami                     = data.aws_ami.rhel_ami.id
   instance_type           = var.instance_type
   key_name                = aws_key_pair.awskey.key_name
-  vpc_security_group_ids  = [data.terraform_remote_state.aws_security_group.outputs.security_group_name]
+  #vpc_security_group_ids  = [data.terraform_remote_state.aws_security_group.outputs.security_group_name]
+  vpc_security_group_ids  = [ "sg-0c712552bf4e7da3c"]
 
   tags = {
     Name        = var.name
