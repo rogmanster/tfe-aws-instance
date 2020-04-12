@@ -2,6 +2,30 @@ terraform {
   required_version = ">= 0.11.0"
 }
 
+// Workspace Data
+data "terraform_remote_state" "aws_vpc_prod" {
+  backend = "remote"
+
+  config = {
+    organization = "rogercorp"
+    workspaces = {
+      name = "aws-vpc-prod"
+    }
+  }
+}
+
+// Workspace Data
+data "terraform_remote_state" "aws_security_group" {
+  backend = "remote"
+
+  config = {
+    organization = "rogercorp"
+    workspaces = {
+      name = "aws-security-group-prod"
+    }
+  }
+}
+
 data "aws_ami" "rhel_ami" {
   most_recent = true
   owners      = ["309956199498"]
@@ -24,23 +48,12 @@ resource "aws_key_pair" "awskey" {
   public_key = tls_private_key.awskey.public_key_openssh
 }
 
-// Workspace Data
-data "terraform_remote_state" "aws_security_group" {
-  backend = "remote"
-
-  config = {
-   organization = "rogercorp"
-   workspaces = {
-     name = "aws-security-group-prod"
-   }
-  }
-}
-
 resource "aws_instance" "ubuntu" {
   ami                     = data.aws_ami.rhel_ami.id
   instance_type           = var.instance_type
   key_name                = aws_key_pair.awskey.key_name
-  security_group_ids = [data.terraform_remote_state.aws_security_group.outputs.security_group_name]
+  vpc_security_group_ids  = [data.terraform_remote_state.aws_security_group.outputs.security_group_id]
+  subnet_id               = data.terraform_remote_state.aws_vpc_prod.outputs.public_subnets[0]
 
   tags = {
     Name        = var.name
