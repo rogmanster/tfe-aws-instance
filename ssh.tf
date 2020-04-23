@@ -11,4 +11,3 @@ resource "null_resource" "awskey" {
     command = "chmod 600 awskey.pem"
   }
 }
-
