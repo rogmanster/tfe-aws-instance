@@ -49,6 +49,7 @@ resource "aws_key_pair" "awskey" {
 }
 
 resource "aws_instance" "ubuntu" {
+  count                   = var.instance_count
   ami                     = data.aws_ami.rhel_ami.id
   instance_type           = var.instance_type
   key_name                = aws_key_pair.awskey.key_name
