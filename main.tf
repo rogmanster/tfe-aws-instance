@@ -37,6 +37,7 @@ data "aws_ami" "rhel_ami" {
 }
 
 provider "aws" {
+  region = "us-east-1"
 }
 
 resource "random_id" "name" {
