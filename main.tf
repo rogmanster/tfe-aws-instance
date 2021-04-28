@@ -26,6 +26,7 @@ data "terraform_remote_state" "aws_security_group" {
   }
 }
 
+/*
 data "aws_ami" "rhel_ami" {
   most_recent = true
   owners      = ["309956199498"]
@@ -34,6 +35,23 @@ data "aws_ami" "rhel_ami" {
     name   = "name"
     values = ["*RHEL-7.3_HVM_GA-*"]
   }
+}*/
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+
+  filter {
+    name = "name"
+    #values = ["ubuntu/images/hvm-ssd/ubuntu-disco-19.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
 }
 
 provider "aws" {
@@ -50,7 +68,8 @@ resource "aws_key_pair" "awskey" {
 
 resource "aws_instance" "ubuntu" {
   count                   = var.instance_count
-  ami                     = data.aws_ami.rhel_ami.id
+  #ami                     = data.aws_ami.rhel_ami.id
+  ami                     = data.aws_ami.ubuntu.id
   instance_type           = var.instance_type
   key_name                = aws_key_pair.awskey.key_name
   vpc_security_group_ids  = [data.terraform_remote_state.aws_security_group.outputs.security_group_id]
