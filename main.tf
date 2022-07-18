@@ -79,6 +79,10 @@ resource "aws_instance" "ubuntu" {
     Name        = var.name
     TTL         = var.ttl
     Owner       = var.owner
+<<<<<<< HEAD
     Description = "This branch updated v15"
+=======
+    Description = "This branch updated v20"
+>>>>>>> d3e31e6139a2f76c036f64001280d1c61f51ca55
   }
 }
