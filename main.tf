@@ -1,19 +1,5 @@
-#terraform {
-#  required_version = ">= 0.11.0"
-#}
-
-#wtf
 terraform {
-  required_providers {
-    aws = {
-      source = "app.terraform.io/rogercorp"
-      version = "4.26.0"
-    }
-  }
-}
-
-provider "aws" { 
-  # Configuration options 
+  required_version = ">= 0.11.0"
 }
 
 // Workspace Data
