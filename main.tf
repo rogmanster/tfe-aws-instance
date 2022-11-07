@@ -68,7 +68,6 @@ resource "aws_key_pair" "awskey" {
 
 resource "aws_instance" "ubuntu" {
   count                   = var.instance_count
-  #ami                     = data.aws_ami.rhel_ami.id
   ami                     = data.aws_ami.ubuntu.id
   instance_type           = var.instance_type
   key_name                = aws_key_pair.awskey.key_name
@@ -82,6 +81,8 @@ resource "aws_instance" "ubuntu" {
     Description = "This branch updated v24"
   }
 
+  //requires Terraform v1.2 or higher
+  //https://developer.hashicorp.com/terraform/language/expressions/custom-conditions#self-object
   lifecycle {
     postcondition {
       condition     = self.instance_state == "running"
