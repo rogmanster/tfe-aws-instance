@@ -81,4 +81,11 @@ resource "aws_instance" "ubuntu" {
     Owner       = var.owner
     Description = "This branch updated v24"
   }
+
+  lifecycle {
+    postcondition {
+      condition     = self.instance_state == "running"
+      error_message = "EC2 instance must be running."
+    }
+  }
 }
