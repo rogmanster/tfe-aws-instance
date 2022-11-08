@@ -2,7 +2,6 @@ terraform {
   required_version = ">= 0.11.0"
 }
 
-// Workspace Data
 data "terraform_remote_state" "aws_vpc_prod" {
   backend = "remote"
 
@@ -14,7 +13,6 @@ data "terraform_remote_state" "aws_vpc_prod" {
   }
 }
 
-// Workspace Data
 data "terraform_remote_state" "aws_security_group" {
   backend = "remote"
 
@@ -26,16 +24,10 @@ data "terraform_remote_state" "aws_security_group" {
   }
 }
 
-/*
-data "aws_ami" "rhel_ami" {
-  most_recent = true
-  owners      = ["309956199498"]
-
-  filter {
-    name   = "name"
-    values = ["*RHEL-7.3_HVM_GA-*"]
-  }
-}*/
+data "aws_key_pair" "example" {
+  key_name           = "rchao-key"
+  include_public_key = true
+}
 
 data "aws_ami" "ubuntu" {
   most_recent = true
@@ -60,16 +52,11 @@ resource "random_id" "name" {
   byte_length = 4
 }
 
-#resource "aws_key_pair" "awskey" {
-#  key_name   = "awskwy-${random_id.name.hex}"
-#  public_key = tls_private_key.awskey.public_key_openssh
-#}
-
 resource "aws_instance" "ubuntu" {
   count                   = var.instance_count
   ami                     = data.aws_ami.ubuntu.id
   instance_type           = var.instance_type
-  #key_name                = aws_key_pair.awskey.key_name
+  key_name                = data.aws_key_pair.example.key_name
   vpc_security_group_ids  = [data.terraform_remote_state.aws_security_group.outputs.security_group_id]
   subnet_id               = data.terraform_remote_state.aws_vpc_prod.outputs.public_subnets[0]
 
