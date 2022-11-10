@@ -61,9 +61,9 @@ resource "aws_instance" "ubuntu" {
   subnet_id               = data.terraform_remote_state.aws_vpc_prod.outputs.public_subnets[0]
 
   tags = {
-    Name        = var.name
-    TTL         = var.ttl
-    Owner       = var.owner
+    name        = var.name
+    ttl         = var.ttl
+    env         = var.env
     Description = "This branch updated v27"
   }
 
