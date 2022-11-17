@@ -12,4 +12,14 @@ $ git tag v1.0.1
 $ git push --tags
 ```
 
-### 3) Repeat Step 1 & 2 to trigger run
+## Cloud Agents
+
+### ENV variables exports
+```
+export TFC_AGENT_TOKEN=<token>
+export TFC_AGENT_NAME=<agent name>
+```
+### Launch Agent
+```
+docker run --env TFC_AGENT_TOKEN=$TFC_AGENT_TOKEN --env TFC_AGENT_NAME=$TFC_AGENT_NAME  hashicorp/tfc-agent:latest
+```
