@@ -1,5 +1,9 @@
 terraform {
-  required_version = ">= 0.11.0"
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
 }
 
 data "terraform_remote_state" "aws_vpc_prod" {
