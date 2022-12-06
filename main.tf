@@ -1,5 +1,9 @@
 terraform {
-  required_version = ">= 0.11.0"
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+  }
 }
 
 data "terraform_remote_state" "aws_vpc_prod" {
@@ -64,7 +68,7 @@ resource "aws_instance" "ubuntu" {
     name        = var.name
     ttl         = var.ttl
     env         = var.env
-    Description = "This branch updated v1.0.3"
+    Description = "This branch updated v1.0.4"
   }
 
   //requires Terraform v1.2 or higher
