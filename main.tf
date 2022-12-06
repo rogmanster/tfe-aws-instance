@@ -68,7 +68,7 @@ resource "aws_instance" "ubuntu" {
     name        = var.name
     ttl         = var.ttl
     env         = var.env
-    Description = "This branch updated v1.0.4 again"
+    Description = "This branch updated v1.0.4"
   }
 
   //requires Terraform v1.2 or higher
